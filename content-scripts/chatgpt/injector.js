@@ -9,7 +9,7 @@
 
 const CHATGPT_INJECTOR_CONFIG = {
   inputSelector: '#prompt-textarea, #mobile-composer-prompt',
-  sendButtonSelector: '[data-testid="send-button"]',
+  sendButtonSelector: '[data-testid="send-button"], button[aria-label="Send message"], button[aria-label*="Send"]',
   targetSite: "chatgpt",
 };
 
@@ -26,15 +26,23 @@ async function inject(payload, autoSend) {
     );
     window.ChatHandoffDom.insertTextIntoEditable(inputEl, payload.markdown);
 
-    // Give React time to register the synthetic input before we attempt to send.
-    await new Promise((r) => setTimeout(r, 300));
-
     if (!autoSend) return;
 
-    const sendBtn = document.querySelector(CHATGPT_INJECTOR_CONFIG.sendButtonSelector);
-    if (sendBtn && !sendBtn.disabled) {
-      sendBtn.click();
-    } else {
+    // Poll for the send button to become enabled (up to 2 seconds)
+    // On mobile viewports, Enter just adds a newline, so we MUST click the button.
+    const start = Date.now();
+    let clicked = false;
+    while (Date.now() - start < 2000) {
+      const sendBtn = document.querySelector(CHATGPT_INJECTOR_CONFIG.sendButtonSelector);
+      if (sendBtn && !sendBtn.disabled && sendBtn.getAttribute('aria-disabled') !== 'true') {
+        sendBtn.click();
+        clicked = true;
+        break;
+      }
+      await new Promise((r) => setTimeout(r, 100));
+    }
+
+    if (!clicked) {
       window.ChatHandoffDom.pressEnter(inputEl);
     }
   } catch (err) {
