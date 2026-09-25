@@ -8,8 +8,8 @@
  */
 
 const COPILOT_INJECTOR_CONFIG = {
-  inputSelector: 'cib-text-input textarea, #userInput, [contenteditable="true"]',
-  sendButtonSelector: 'cib-button[type="submit"], button[aria-label="Submit"], button[type="submit"]',
+  inputSelector: 'cib-text-input textarea, #userInput, [contenteditable="true"], textarea',
+  sendButtonSelector: 'cib-button[type="submit"], button[aria-label="Submit"], button[type="submit"], [aria-label*="Submit"]',
   targetSite: "copilot",
 };
 

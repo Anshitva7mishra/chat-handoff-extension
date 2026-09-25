@@ -9,8 +9,8 @@
 
 const GEMINI_INJECTOR_CONFIG = {
   // Gemini's input is a contenteditable paragraph inside the rich-textarea custom element.
-  inputSelector: 'rich-textarea div[contenteditable="true"], .input-area [contenteditable="true"]',
-  sendButtonSelector: '.send-button, button[aria-label="Send message"]',
+  inputSelector: 'rich-textarea div[contenteditable="true"], .input-area [contenteditable="true"], text-area [contenteditable="true"], [contenteditable="true"]',
+  sendButtonSelector: '.send-button, button[aria-label="Send message"], button[aria-label*="Send"]',
   targetSite: "gemini",
 };
 

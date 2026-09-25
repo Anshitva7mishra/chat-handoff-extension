@@ -8,8 +8,8 @@
  */
 
 const MISTRAL_INJECTOR_CONFIG = {
-  inputSelector: '[contenteditable="true"]',
-  sendButtonSelector: 'button[aria-label="Send"], button[aria-label="Send message"], button[type="submit"]',
+  inputSelector: 'textarea[placeholder], [contenteditable="true"], textarea',
+  sendButtonSelector: 'button[aria-label="Send"], button[aria-label="Send message"], button[type="submit"], [aria-label*="Send"]',
   targetSite: "mistral",
 };
 
