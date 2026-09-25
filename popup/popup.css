@@ -1,44 +1,47 @@
-/* popup/popup.css — dark mode */
+/* popup/popup.css */
 
 /* ---- Design tokens -------------------------------------------------------- */
-:root {
-  --bg-base:        #0d0d12;
-  --bg-surface:     #15151d;
-  --bg-elevated:    #1c1c27;
-  --bg-hover:       #222231;
-  --border:         #272736;
-  --border-focus:   #5b52e0;
-  --text-primary:   #e4e4f0;
-  --text-secondary: #8a8aa8;
-  --text-muted:     #50506a;
-  --accent:         #6d64e8;
-  --accent-hover:   #5b52d4;
-  --error:          #f87171;
-  --success:        #4ade80;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-  /* Per-service accent colors — applied via data-target on each button */
-  --svc-claude:     #da7756;
-  --svc-chatgpt:    #10a37f;
-  --svc-gemini:     #4285f4;
-  --svc-perplexity: #20b2aa;
-  --svc-mistral:    #ff6b35;
-  --svc-copilot:    #0078d4;
-  --svc-deepseek:   #4e9de0;
+:root {
+  --bg-base:        #09090f;
+  --bg-surface:     #111118;
+  --bg-elevated:    #18181f;
+  --bg-hover:       #1f1f2a;
+  --border:         #1e1e2c;
+  --border-subtle:  #252534;
+  --border-focus:   #5c52e0;
+  --text-primary:   #ececf4;
+  --text-secondary: #7a7a9a;
+  --text-muted:     #3e3e58;
+  --accent:         #5c52e0;
+  --accent-glow:    rgba(92, 82, 224, 0.18);
+  --accent-hover:   #4e45cc;
+  --error:          #e05252;
+  --success:        #3abf72;
+
+  --svc-claude:     #c96a48;
+  --svc-chatgpt:    #0fa37a;
+  --svc-gemini:     #3b7ff5;
+  --svc-perplexity: #18a39a;
+  --svc-mistral:    #e85d2a;
+  --svc-copilot:    #006fc8;
 }
 
-/* ---- Base ------------------------------------------------------------------ */
+/* ---- Reset ---------------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
 
+html { -webkit-font-smoothing: antialiased; }
+
 body {
-  width: 360px;
+  width: 340px;
   margin: 0;
   padding: 0;
   background: var(--bg-base);
   color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   font-size: 13px;
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
 }
 
 .hidden { display: none !important; }
@@ -48,101 +51,160 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px 10px;
+  padding: 13px 15px 12px;
   border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
 }
 
 .header-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
 }
 
-/* A simple geometric icon mark — no emoji, no image needed */
+/* Geometric icon mark — two offset squares forming a bridge/transfer symbol */
 .header-logo {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  background: conic-gradient(from 180deg, var(--accent) 0%, #9f79ff 50%, var(--accent) 100%);
-  border-radius: 5px;
+  position: relative;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
+}
+
+.header-logo::before,
+.header-logo::after {
+  content: '';
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+}
+
+.header-logo::before {
+  top: 0;
+  left: 0;
+  background: var(--accent);
+  opacity: 0.9;
+}
+
+.header-logo::after {
+  bottom: 0;
+  right: 0;
+  background: #9b8fff;
+  opacity: 0.85;
 }
 
 .header-title {
   font-size: 13px;
   font-weight: 600;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
 .header-settings {
   font-size: 11px;
-  color: var(--text-secondary);
+  font-weight: 500;
+  color: var(--text-muted);
   text-decoration: none;
-  padding: 3px 8px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  padding: 3px 9px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  letter-spacing: 0.01em;
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
 }
 
 .header-settings:hover {
-  color: var(--text-primary);
+  color: var(--text-secondary);
   border-color: var(--border-focus);
   background: var(--bg-elevated);
 }
 
+/* ---- Divider line --------------------------------------------------------- */
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0;
+}
+
 /* ---- Step: Pick ----------------------------------------------------------- */
-#step-pick { padding: 12px 14px 14px; }
+#step-pick {
+  padding: 14px 15px 16px;
+}
 
 .step-label {
-  margin: 0 0 10px;
-  font-size: 11px;
-  font-weight: 500;
+  margin: 0 0 11px;
+  font-size: 10px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.09em;
   color: var(--text-muted);
 }
 
 #targets {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
 }
 
 .target-btn {
   position: relative;
-  padding: 9px 12px;
+  padding: 10px 8px 9px;
   background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--svc, var(--border));
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  color: var(--text-primary);
-  font-size: 13px;
+  color: var(--text-secondary);
+  font-size: 12px;
   font-weight: 500;
   font-family: inherit;
-  text-align: left;
+  text-align: center;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  overflow: hidden;
+  transition: color 0.14s, border-color 0.14s, background 0.14s, transform 0.1s;
+}
+
+/* Thin top-edge accent strip */
+.target-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: var(--svc, var(--border-subtle));
+  opacity: 0.6;
+  transition: opacity 0.14s, left 0.14s, right 0.14s;
 }
 
 .target-btn:hover {
   background: var(--bg-hover);
   border-color: var(--svc, var(--border-focus));
   color: #fff;
+  transform: translateY(-1px);
 }
 
-/* Bind each service color via the CSS custom property */
+.target-btn:hover::before {
+  opacity: 1;
+  left: 0;
+  right: 0;
+}
+
+.target-btn:active {
+  transform: translateY(0);
+}
+
+/* Per-service color bindings */
 [data-target="claude"]     { --svc: var(--svc-claude); }
 [data-target="chatgpt"]    { --svc: var(--svc-chatgpt); }
 [data-target="gemini"]     { --svc: var(--svc-gemini); }
 [data-target="perplexity"] { --svc: var(--svc-perplexity); }
 [data-target="mistral"]    { --svc: var(--svc-mistral); }
 [data-target="copilot"]    { --svc: var(--svc-copilot); }
-[data-target="deepseek"]   { --svc: var(--svc-deepseek); }
 
 /* ---- Step: Preview -------------------------------------------------------- */
-#step-preview { padding: 12px 14px 14px; }
+#step-preview {
+  padding: 13px 15px 15px;
+}
 
 .field-row {
   display: flex;
@@ -153,12 +215,12 @@ body {
 
 .field-label {
   display: block;
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 10px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.09em;
   color: var(--text-muted);
-  margin: 10px 0 5px;
+  margin: 11px 0 5px;
 }
 
 .field-row .field-label { margin: 0; }
@@ -166,14 +228,17 @@ body {
 select {
   font-size: 11px;
   font-family: inherit;
-  padding: 3px 6px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
+  font-weight: 500;
+  padding: 3px 7px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
   background: var(--bg-elevated);
   color: var(--text-secondary);
   cursor: pointer;
   max-width: 130px;
-  transition: border-color 0.15s;
+  transition: border-color 0.12s;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 select:focus {
@@ -184,21 +249,22 @@ select:focus {
 textarea {
   display: block;
   width: 100%;
-  padding: 8px 10px;
+  padding: 9px 11px;
   background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 7px;
   color: var(--text-primary);
   font-family: inherit;
   font-size: 12px;
-  line-height: 1.55;
+  line-height: 1.6;
   resize: vertical;
-  transition: border-color 0.15s;
+  transition: border-color 0.12s, box-shadow 0.12s;
 }
 
 textarea:focus {
   outline: none;
   border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
 textarea[readonly] {
@@ -207,31 +273,36 @@ textarea[readonly] {
   cursor: default;
 }
 
+/* ---- Actions -------------------------------------------------------------- */
 .actions {
   display: flex;
-  gap: 8px;
+  gap: 7px;
   margin-top: 12px;
 }
 
 button {
   font-family: inherit;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 7px;
   cursor: pointer;
-  padding: 7px 0;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  padding: 8px 0;
+  letter-spacing: 0.01em;
+  transition: background 0.12s, border-color 0.12s, color 0.12s, transform 0.08s;
 }
+
+button:active { transform: scale(0.98); }
 
 .btn-ghost {
   flex: 1;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
 }
 
 .btn-ghost:hover {
   background: var(--bg-elevated);
+  border-color: var(--border-focus);
   color: var(--text-primary);
 }
 
@@ -240,20 +311,23 @@ button {
   background: var(--accent);
   border: 1px solid var(--accent);
   color: #fff;
+  box-shadow: 0 1px 12px var(--accent-glow);
 }
 
 .btn-primary:hover {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
+  box-shadow: 0 2px 18px rgba(92, 82, 224, 0.3);
 }
 
-/* ---- Status --------------------------------------------------------------- */
+/* ---- Status line ---------------------------------------------------------- */
 #result {
   margin: 0;
-  padding: 0 14px 12px;
-  font-size: 12px;
+  padding: 0 15px 12px;
+  font-size: 11.5px;
   color: var(--text-secondary);
-  min-height: 14px;
+  min-height: 16px;
+  line-height: 1.5;
 }
 
 #result.error { color: var(--error); }
