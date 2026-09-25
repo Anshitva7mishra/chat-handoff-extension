@@ -8,7 +8,7 @@
  */
 
 const PERPLEXITY_INJECTOR_CONFIG = {
-  inputSelector: 'textarea[placeholder], #ask-textarea, textarea',
+  inputSelector: '#ask-input, #ask-textarea, textarea[placeholder], textarea',
   sendButtonSelector: 'button[aria-label="Submit"], button[type="submit"]',
   targetSite: "perplexity",
 };
