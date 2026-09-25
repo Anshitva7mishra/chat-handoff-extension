@@ -26,3 +26,6 @@ test-results/
 # Chrome extension packed file
 *.crx
 *.pem
+
+# Internal deployment notes — not part of the public repo
+DEPLOYMENT.md
