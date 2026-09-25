@@ -95,11 +95,18 @@ async function confirmHandoff({ targetSite, sourceSite, leadIn, transcript }) {
       const targetTab = matches[0];
       await chrome.tabs.update(targetTab.id, { active: true });
       await chrome.windows.update(targetTab.windowId, { focused: true });
-      await chrome.tabs.sendMessage(targetTab.id, {
-        type: "RUN_PENDING_HANDOFF",
-        payload,
-        autoSend,
-      });
+      try {
+        await chrome.tabs.sendMessage(targetTab.id, {
+          type: "RUN_PENDING_HANDOFF",
+          payload,
+          autoSend,
+        });
+      } catch (err) {
+        // The content script might be dead (e.g. extension was just updated)
+        // Reloading the tab will inject the new script, which will automatically
+        // grab the pending payload on load.
+        await chrome.tabs.reload(targetTab.id);
+      }
     } else {
       await chrome.tabs.create({ url: SITE_URLS[targetSite] });
     }
