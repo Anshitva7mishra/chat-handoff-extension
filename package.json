@@ -8,7 +8,8 @@
     "test:shared": "node shared/tests/format-conversation.test.js",
     "test:unit": "node tests/unit/claude-scraper.test.js && node tests/unit/chatgpt-scraper.test.js",
     "test:e2e": "npx playwright test tests/e2e/",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:zip": "powershell -ExecutionPolicy Bypass -File scripts/build-zip.ps1"
   },
   "devDependencies": {
     "eslint": "^9.0.0",
