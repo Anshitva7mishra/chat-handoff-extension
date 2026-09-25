@@ -28,23 +28,7 @@ async function inject(payload, autoSend) {
 
     if (!autoSend) return;
 
-    // Poll for the send button to become enabled (up to 2 seconds)
-    // On mobile viewports, Enter just adds a newline, so we MUST click the button.
-    const start = Date.now();
-    let clicked = false;
-    while (Date.now() - start < 2000) {
-      const sendBtn = document.querySelector(CHATGPT_INJECTOR_CONFIG.sendButtonSelector);
-      if (sendBtn && !sendBtn.disabled && sendBtn.getAttribute('aria-disabled') !== 'true') {
-        sendBtn.click();
-        clicked = true;
-        break;
-      }
-      await new Promise((r) => setTimeout(r, 100));
-    }
-
-    if (!clicked) {
-      window.ChatHandoffDom.pressEnter(inputEl);
-    }
+    await window.ChatHandoffDom.clickSendButton(CHATGPT_INJECTOR_CONFIG.sendButtonSelector, inputEl);
   } catch (err) {
     // The popup has already closed at this point — log so the user can share it
     // when reporting "it didn't work".

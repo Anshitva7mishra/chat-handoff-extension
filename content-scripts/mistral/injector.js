@@ -20,16 +20,9 @@ async function inject(payload, autoSend) {
     );
     window.ChatHandoffDom.insertTextIntoEditable(inputEl, payload.markdown);
 
-    await new Promise((r) => setTimeout(r, 300));
-
     if (!autoSend) return;
 
-    const sendBtn = document.querySelector(MISTRAL_INJECTOR_CONFIG.sendButtonSelector);
-    if (sendBtn && !sendBtn.disabled) {
-      sendBtn.click();
-    } else {
-      window.ChatHandoffDom.pressEnter(inputEl);
-    }
+    await window.ChatHandoffDom.clickSendButton(MISTRAL_INJECTOR_CONFIG.sendButtonSelector, inputEl);
   } catch (err) {
     console.error("[Chat Handoff] Mistral injection failed:", err.message);
   }

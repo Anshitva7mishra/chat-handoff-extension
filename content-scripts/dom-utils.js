@@ -73,4 +73,24 @@ function pressEnter(el) {
   });
 }
 
-window.ChatHandoffDom = { waitForElement, insertTextIntoEditable, pressEnter };
+async function clickSendButton(selector, fallbackInputEl) {
+  const start = Date.now();
+  let clicked = false;
+  
+  while (Date.now() - start < 2000) {
+    const btn = document.querySelector(selector);
+    const disabled = !btn || btn.disabled || btn.getAttribute("aria-disabled") === "true" || btn.getAttribute("data-disabled") === "true";
+    if (btn && !disabled) {
+      btn.click();
+      clicked = true;
+      break;
+    }
+    await new Promise((r) => setTimeout(r, 100));
+  }
+
+  if (!clicked && fallbackInputEl) {
+    pressEnter(fallbackInputEl);
+  }
+}
+
+window.ChatHandoffDom = { waitForElement, insertTextIntoEditable, pressEnter, clickSendButton };
