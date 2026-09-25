@@ -11,9 +11,10 @@
  */
 
 const CLAUDE_SCRAPER_CONFIG = {
-  messageContainerSelector: '[data-testid="user-message"], [data-testid="assistant-message"]',
+  messageContainerSelector: '[data-testid="user-message"], [data-testid="assistant-message"], [data-testid="message"]',
   isUserMessage: (el) =>
-    el.getAttribute("data-testid") === "user-message",
+    el.getAttribute("data-testid") === "user-message" ||
+    el.getAttribute("data-is-author") === "human",
 };
 
 /**

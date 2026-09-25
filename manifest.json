@@ -106,6 +106,6 @@
         "content-scripts/copilot/injector.js"
       ],
       "run_at": "document_idle"
-    },
+    }
   ]
 }
