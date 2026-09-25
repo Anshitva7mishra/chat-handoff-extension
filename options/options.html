@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chat Handoff — Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+
+  <div class="page">
+    <header class="page-header">
+      <div class="header-brand">
+        <span class="header-logo"></span>
+        <h1>Chat Handoff</h1>
+      </div>
+      <span class="page-subtitle">Settings</span>
+    </header>
+
+    <div class="privacy-banner">
+      Everything stored here lives only in your browser. Settings and templates sync
+      across your Chrome devices through your existing Google account. History is
+      local to this device. Nothing is sent to any server.
+    </div>
+
+    <section class="card" aria-labelledby="settings-heading">
+      <h2 id="settings-heading">Preferences</h2>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-name">Auto-send</span>
+          <span class="setting-desc">Submit the handoff message automatically after pasting into the target chatbot</span>
+        </div>
+        <label class="toggle" aria-label="Toggle auto-send">
+          <input type="checkbox" id="autoSend" />
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-name">Default target</span>
+          <span class="setting-desc">Which chatbot to suggest first when starting a handoff</span>
+        </div>
+        <select id="defaultTarget" aria-label="Default target chatbot">
+          <option value="chatgpt">ChatGPT</option>
+          <option value="gemini">Gemini</option>
+          <option value="perplexity">Perplexity</option>
+          <option value="mistral">Mistral</option>
+          <option value="copilot">Copilot</option>
+          <option value="deepseek">DeepSeek</option>
+          <option value="claude">Claude</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="templates-heading">
+      <h2 id="templates-heading">Lead-in Templates</h2>
+      <p class="section-desc">Named templates appear in the popup dropdown so you can apply them in one click before sending a handoff.</p>
+
+      <div id="templateList"></div>
+
+      <div class="add-template">
+        <input
+          id="newTemplateName"
+          placeholder="Template name"
+          aria-label="New template name"
+        />
+        <textarea
+          id="newTemplateText"
+          placeholder="Lead-in text shown to the target chatbot"
+          rows="2"
+          aria-label="New template text"
+        ></textarea>
+        <button id="addTemplateBtn" class="btn-primary">Add Template</button>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="history-heading">
+      <h2 id="history-heading">Recent Handoffs</h2>
+      <p class="section-desc">Metadata only — source, target, and timestamp. Full transcripts are never stored.</p>
+
+      <div id="historyList"></div>
+      <button id="clearHistoryBtn" class="btn-danger">Clear History</button>
+    </section>
+  </div>
+
+  <script src="../storage/storage-schema.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

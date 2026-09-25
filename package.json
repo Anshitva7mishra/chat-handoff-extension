@@ -1,0 +1,17 @@
+{
+  "name": "chat-handoff-extension",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser extension that continues an AI chat conversation on a different chatbot. No backend, no API keys, nothing leaves the browser.",
+  "scripts": {
+    "test": "npm run test:shared && npm run test:unit",
+    "test:shared": "node shared/tests/format-conversation.test.js",
+    "test:unit": "node tests/unit/claude-scraper.test.js && node tests/unit/chatgpt-scraper.test.js",
+    "test:e2e": "npx playwright test tests/e2e/",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "jsdom": "^24.0.0"
+  }
+}

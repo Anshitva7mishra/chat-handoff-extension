@@ -1,0 +1,259 @@
+/* popup/popup.css — dark mode */
+
+/* ---- Design tokens -------------------------------------------------------- */
+:root {
+  --bg-base:        #0d0d12;
+  --bg-surface:     #15151d;
+  --bg-elevated:    #1c1c27;
+  --bg-hover:       #222231;
+  --border:         #272736;
+  --border-focus:   #5b52e0;
+  --text-primary:   #e4e4f0;
+  --text-secondary: #8a8aa8;
+  --text-muted:     #50506a;
+  --accent:         #6d64e8;
+  --accent-hover:   #5b52d4;
+  --error:          #f87171;
+  --success:        #4ade80;
+
+  /* Per-service accent colors — applied via data-target on each button */
+  --svc-claude:     #da7756;
+  --svc-chatgpt:    #10a37f;
+  --svc-gemini:     #4285f4;
+  --svc-perplexity: #20b2aa;
+  --svc-mistral:    #ff6b35;
+  --svc-copilot:    #0078d4;
+  --svc-deepseek:   #4e9de0;
+}
+
+/* ---- Base ------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  width: 360px;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hidden { display: none !important; }
+
+/* ---- Header --------------------------------------------------------------- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* A simple geometric icon mark — no emoji, no image needed */
+.header-logo {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: conic-gradient(from 180deg, var(--accent) 0%, #9f79ff 50%, var(--accent) 100%);
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.header-settings {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.header-settings:hover {
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+  background: var(--bg-elevated);
+}
+
+/* ---- Step: Pick ----------------------------------------------------------- */
+#step-pick { padding: 12px 14px 14px; }
+
+.step-label {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+#targets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.target-btn {
+  position: relative;
+  padding: 9px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--svc, var(--border));
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.target-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--svc, var(--border-focus));
+  color: #fff;
+}
+
+/* Bind each service color via the CSS custom property */
+[data-target="claude"]     { --svc: var(--svc-claude); }
+[data-target="chatgpt"]    { --svc: var(--svc-chatgpt); }
+[data-target="gemini"]     { --svc: var(--svc-gemini); }
+[data-target="perplexity"] { --svc: var(--svc-perplexity); }
+[data-target="mistral"]    { --svc: var(--svc-mistral); }
+[data-target="copilot"]    { --svc: var(--svc-copilot); }
+[data-target="deepseek"]   { --svc: var(--svc-deepseek); }
+
+/* ---- Step: Preview -------------------------------------------------------- */
+#step-preview { padding: 12px 14px 14px; }
+
+.field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.field-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin: 10px 0 5px;
+}
+
+.field-row .field-label { margin: 0; }
+
+select {
+  font-size: 11px;
+  font-family: inherit;
+  padding: 3px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  cursor: pointer;
+  max-width: 130px;
+  transition: border-color 0.15s;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.55;
+  resize: vertical;
+  transition: border-color 0.15s;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+textarea[readonly] {
+  background: var(--bg-base);
+  color: var(--text-secondary);
+  cursor: default;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+button {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 7px 0;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn-ghost {
+  flex: 1;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.btn-primary {
+  flex: 2;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ---- Status --------------------------------------------------------------- */
+#result {
+  margin: 0;
+  padding: 0 14px 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  min-height: 14px;
+}
+
+#result.error { color: var(--error); }

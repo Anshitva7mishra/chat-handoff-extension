@@ -1,0 +1,21 @@
+<!--
+  tests/unit/fixtures/claude-conversation.html
+
+  Minimal HTML mimicking the DOM structure Claude's web app uses for a conversation.
+  Selectors match CLAUDE_SCRAPER_CONFIG in content-scripts/claude/scraper.js.
+  Update this file whenever the real selector is updated so tests stay in sync.
+-->
+<!-- User message: data-is-author="human" makes isUserMessage() return true -->
+<div data-testid="message" data-is-author="human">
+  What is the capital of France?
+</div>
+<!-- Assistant message: no data-is-author="human", no data-testid="user-message" -->
+<div data-testid="message">
+  The capital of France is Paris.
+</div>
+<div data-testid="message" data-is-author="human">
+  And of Germany?
+</div>
+<div data-testid="message">
+  The capital of Germany is Berlin.
+</div>

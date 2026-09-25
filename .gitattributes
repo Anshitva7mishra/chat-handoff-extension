@@ -1,0 +1,11 @@
+# Normalize line endings to LF in the repository for all text files.
+# Windows checkouts will still use CRLF locally (core.autocrlf=true is the default),
+# but the repo itself stores LF, avoiding diff noise on cross-platform teams.
+* text=auto eol=lf
+
+# Binary files — never mangle these
+*.png binary
+*.jpg binary
+*.ico binary
+*.crx binary
+*.pem binary

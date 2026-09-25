@@ -1,0 +1,124 @@
+{
+  "manifest_version": 3,
+  "name": "Chat Handoff",
+  "version": "1.1.0",
+  "description": "Continue your AI chat on a different chatbot when you run out of tokens — free, no account, nothing leaves your browser.",
+
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+
+  "host_permissions": [
+    "https://claude.ai/*",
+    "https://chatgpt.com/*",
+    "https://gemini.google.com/*",
+    "https://perplexity.ai/*",
+    "https://chat.mistral.ai/*",
+    "https://copilot.microsoft.com/*",
+    "https://chat.deepseek.com/*"
+  ],
+
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "options_page": "options/options.html",
+
+  "content_scripts": [
+    {
+      "matches": ["https://claude.ai/*"],
+      "js": [
+        "shared/format-conversation.js",
+        "shared/default-lead-in.js",
+        "shared/build-handoff-message.js",
+        "content-scripts/dom-utils.js",
+        "content-scripts/claude/scraper.js",
+        "content-scripts/claude/injector.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": [
+        "shared/format-conversation.js",
+        "shared/default-lead-in.js",
+        "shared/build-handoff-message.js",
+        "content-scripts/dom-utils.js",
+        "content-scripts/chatgpt/scraper.js",
+        "content-scripts/chatgpt/injector.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": [
+        "shared/format-conversation.js",
+        "shared/default-lead-in.js",
+        "shared/build-handoff-message.js",
+        "content-scripts/dom-utils.js",
+        "content-scripts/gemini/scraper.js",
+        "content-scripts/gemini/injector.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://perplexity.ai/*"],
+      "js": [
+        "shared/format-conversation.js",
+        "shared/default-lead-in.js",
+        "shared/build-handoff-message.js",
+        "content-scripts/dom-utils.js",
+        "content-scripts/perplexity/scraper.js",
+        "content-scripts/perplexity/injector.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://chat.mistral.ai/*"],
+      "js": [
+        "shared/format-conversation.js",
+        "shared/default-lead-in.js",
+        "shared/build-handoff-message.js",
+        "content-scripts/dom-utils.js",
+        "content-scripts/mistral/scraper.js",
+        "content-scripts/mistral/injector.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://copilot.microsoft.com/*"],
+      "js": [
+        "shared/format-conversation.js",
+        "shared/default-lead-in.js",
+        "shared/build-handoff-message.js",
+        "content-scripts/dom-utils.js",
+        "content-scripts/copilot/scraper.js",
+        "content-scripts/copilot/injector.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://chat.deepseek.com/*"],
+      "js": [
+        "shared/format-conversation.js",
+        "shared/default-lead-in.js",
+        "shared/build-handoff-message.js",
+        "content-scripts/dom-utils.js",
+        "content-scripts/deepseek/scraper.js",
+        "content-scripts/deepseek/injector.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

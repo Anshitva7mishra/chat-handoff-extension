@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Production build output (if a bundler is added later)
+dist/
+build/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/settings.json
+.idea/
+
+# Test output
+coverage/
+playwright-report/
+test-results/
+
+# Environment files — NEVER commit session cookies or API keys
+.env
+.env.local
+.env.*.local
+
+# Chrome extension packed file
+*.crx
+*.pem

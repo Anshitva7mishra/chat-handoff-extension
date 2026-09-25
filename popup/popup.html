@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Chat Handoff</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-brand">
+      <span class="header-logo"></span>
+      <h1 class="header-title">Chat Handoff</h1>
+    </div>
+    <a id="optionsLink" href="#" class="header-settings" aria-label="Open settings">Settings</a>
+  </header>
+
+  <!-- Step 1: Pick the target chatbot -->
+  <div id="step-pick">
+    <p class="step-label">Continue this conversation on:</p>
+    <div id="targets" role="group" aria-label="Select target chatbot">
+      <button data-target="chatgpt"    id="btn-chatgpt"    class="target-btn">ChatGPT</button>
+      <button data-target="gemini"     id="btn-gemini"     class="target-btn">Gemini</button>
+      <button data-target="perplexity" id="btn-perplexity" class="target-btn">Perplexity</button>
+      <button data-target="mistral"    id="btn-mistral"    class="target-btn">Mistral</button>
+      <button data-target="copilot"    id="btn-copilot"    class="target-btn">Copilot</button>
+      <button data-target="deepseek"   id="btn-deepseek"   class="target-btn">DeepSeek</button>
+      <button data-target="claude"     id="btn-claude"     class="target-btn">Claude</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Edit lead-in and preview transcript -->
+  <div id="step-preview" class="hidden">
+    <div class="field-row">
+      <label class="field-label" for="leadInBox">Lead-in message</label>
+      <select id="templateSelect" aria-label="Load a saved template">
+        <option value="">Use template</option>
+      </select>
+    </div>
+    <textarea id="leadInBox" rows="3" aria-label="Lead-in message (editable)"></textarea>
+
+    <label class="field-label" for="transcriptBox">Conversation preview</label>
+    <textarea id="transcriptBox" rows="5" readonly aria-label="Conversation transcript (read-only)"></textarea>
+
+    <div class="actions">
+      <button id="backBtn" class="btn-ghost">Back</button>
+      <button id="sendBtn" class="btn-primary">Send</button>
+    </div>
+  </div>
+
+  <p id="result" role="status" aria-live="polite"></p>
+
+  <script src="../storage/storage-schema.js"></script>
+  <script src="components/TemplatePicker.js"></script>
+  <script src="components/PickTarget.js"></script>
+  <script src="components/PreviewEditor.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
