@@ -42,8 +42,16 @@ function insertTextIntoEditable(el, text) {
   }
 
   // For contenteditable elements (Draft.js, ProseMirror, Lexical)
-  document.execCommand("selectAll", false, null);
-  document.execCommand("delete", false, null);
+  
+  // SPAs often fail to place the caret inside the contenteditable on el.focus() alone.
+  // We must forcefully create a Selection Range inside it.
+  const sel = window.getSelection();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  document.execCommand("delete", false, null); // Clear existing content
 
   // Modern frameworks intercept paste and update their state.
   // We fire paste first. If they cancel it (preventDefault), they handled it.
@@ -59,7 +67,17 @@ function insertTextIntoEditable(el, text) {
 
   // If the framework didn't handle and cancel the paste, fall back to native execCommand
   if (pasteAllowed) {
+    const beforeLen = el.textContent.length;
     document.execCommand("insertText", false, text);
+
+    // If execCommand silently failed to insert anything, force a TextEvent (final fallback)
+    if (el.textContent.length === beforeLen) {
+      try {
+        const textEvent = document.createEvent("TextEvent");
+        textEvent.initTextEvent("textInput", true, true, window, text);
+        el.dispatchEvent(textEvent);
+      } catch (e) {}
+    }
   }
 
   el.dispatchEvent(new Event("input", { bubbles: true }));
