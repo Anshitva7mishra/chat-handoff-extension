@@ -28,18 +28,38 @@ function waitForElement(selector, timeoutMs = 15000, pollMs = 250) {
 
 function insertTextIntoEditable(el, text) {
   el.focus();
+
+  if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") {
+    // React overrides the value setter, so we must bypass it to trigger onChange
+    const nativeSetter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(el), "value")?.set;
+    if (nativeSetter) {
+      nativeSetter.call(el, text);
+    } else {
+      el.value = text;
+    }
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    return;
+  }
+
+  // For contenteditable elements (Draft.js, ProseMirror, Lexical)
   document.execCommand("selectAll", false, null);
   document.execCommand("delete", false, null);
 
-  const inserted = document.execCommand("insertText", false, text);
+  // Modern frameworks intercept paste and update their state.
+  // We fire paste first. If they cancel it (preventDefault), they handled it.
+  const dataTransfer = new DataTransfer();
+  dataTransfer.setData("text/plain", text);
+  const pasteEvent = new ClipboardEvent("paste", {
+    clipboardData: dataTransfer,
+    bubbles: true,
+    cancelable: true,
+  });
 
-  if (!inserted) {
-    // execCommand is deprecated in some browsers; fall back to a synthetic paste event.
-    const dataTransfer = new DataTransfer();
-    dataTransfer.setData("text/plain", text);
-    el.dispatchEvent(
-      new ClipboardEvent("paste", { clipboardData: dataTransfer, bubbles: true, cancelable: true })
-    );
+  const pasteAllowed = el.dispatchEvent(pasteEvent);
+
+  // If the framework didn't handle and cancel the paste, fall back to native execCommand
+  if (pasteAllowed) {
+    document.execCommand("insertText", false, text);
   }
 
   el.dispatchEvent(new Event("input", { bubbles: true }));
