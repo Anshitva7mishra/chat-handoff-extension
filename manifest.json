@@ -16,8 +16,7 @@
     "https://gemini.google.com/*",
     "https://perplexity.ai/*",
     "https://chat.mistral.ai/*",
-    "https://copilot.microsoft.com/*",
-    "https://chat.deepseek.com/*"
+    "https://copilot.microsoft.com/*"
   ],
 
   "background": {
@@ -108,17 +107,5 @@
       ],
       "run_at": "document_idle"
     },
-    {
-      "matches": ["https://chat.deepseek.com/*"],
-      "js": [
-        "shared/format-conversation.js",
-        "shared/default-lead-in.js",
-        "shared/build-handoff-message.js",
-        "content-scripts/dom-utils.js",
-        "content-scripts/deepseek/scraper.js",
-        "content-scripts/deepseek/injector.js"
-      ],
-      "run_at": "document_idle"
-    }
   ]
 }

@@ -11,12 +11,10 @@
  */
 
 const GEMINI_SCRAPER_CONFIG = {
-  // Outer container that wraps each turn (user + assistant alike).
-  messageContainerSelector: ".conversation-container [data-message-id], user-query, model-response",
-  isUserMessage: (el) =>
-    el.tagName.toLowerCase() === "user-query" ||
-    el.getAttribute("data-role") === "user" ||
-    el.closest("user-query") !== null,
+  // Verified against live Gemini DOM (2026-09-25).
+  // Gemini renders user turns as <user-query> and assistant turns as <model-response> custom elements.
+  messageContainerSelector: "user-query, model-response",
+  isUserMessage: (el) => el.tagName.toLowerCase() === "user-query",
 };
 
 /**

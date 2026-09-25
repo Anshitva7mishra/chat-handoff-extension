@@ -11,11 +11,10 @@
  */
 
 const MISTRAL_SCRAPER_CONFIG = {
-  messageContainerSelector: "[data-message-id], [class*='Message'], [class*='message-container']",
-  isUserMessage: (el) =>
-    el.getAttribute("data-role") === "user" ||
-    el.getAttribute("data-message-author-role") === "user" ||
-    el.closest("[class*='UserMessage'], [class*='userMessage']") !== null,
+  // Verified against live Mistral Le Chat DOM (2026-09-25).
+  // Uses the same data-message-author-role attribute pattern as ChatGPT.
+  messageContainerSelector: "[data-message-author-role]",
+  isUserMessage: (el) => el.getAttribute("data-message-author-role") === "user",
 };
 
 /**

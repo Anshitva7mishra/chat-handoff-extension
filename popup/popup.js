@@ -42,7 +42,6 @@ function detectSourceSite(url) {
   if (url.includes("perplexity.ai"))          return "perplexity";
   if (url.includes("chat.mistral.ai"))        return "mistral";
   if (url.includes("copilot.microsoft.com")) return "copilot";
-  if (url.includes("chat.deepseek.com"))      return "deepseek";
   return null;
 }
 
@@ -105,7 +104,7 @@ async function handleSend({ leadIn }) {
 
   const SITE_LABELS = {
     claude: "Claude", chatgpt: "ChatGPT", gemini: "Gemini",
-    perplexity: "Perplexity", mistral: "Mistral", copilot: "Copilot", deepseek: "DeepSeek",
+    perplexity: "Perplexity", mistral: "Mistral", copilot: "Copilot",
   };
   const label = SITE_LABELS[currentTargetSite] || currentTargetSite;
   setStatus(`Sent to ${label}.`);

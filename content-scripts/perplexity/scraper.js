@@ -12,11 +12,11 @@
  */
 
 const PERPLEXITY_SCRAPER_CONFIG = {
-  // Perplexity wraps each query+answer pair. We select individual turn elements.
-  messageContainerSelector: '[data-message-author-role], .break-words',
-  isUserMessage: (el) =>
-    el.getAttribute("data-message-author-role") === "user" ||
-    el.closest("[data-testid*='user'], [class*='UserMessage'], [class*='userMessage']") !== null,
+  // Verified against live Perplexity DOM (2026-09-25).
+  // Each turn (user query + assistant answer) is wrapped in [data-workflow-items="populated"].
+  // Assistant turns contain a child [data-workflow-final-text]; user turns do not.
+  messageContainerSelector: '[data-workflow-items="populated"]',
+  isUserMessage: (el) => el.querySelector('[data-workflow-final-text]') === null,
 };
 
 /**

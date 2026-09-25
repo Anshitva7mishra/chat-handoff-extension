@@ -10,10 +10,11 @@
  */
 
 const COPILOT_SCRAPER_CONFIG = {
-  messageContainerSelector: "cib-chat-turn, [class*='ChatTurn'], [data-message-id]",
-  isUserMessage: (el) =>
-    el.getAttribute("data-turn-author") === "user" ||
-    el.closest("[data-turn-author='user'], cib-user-message") !== null,
+  // Verified against live Copilot DOM (2026-09-25).
+  // User messages carry data-content="user-message"; assistant messages have "ai-message-item" in class.
+  // Empty toolbar elements with class*="message-item" are filtered out by the text.length check below.
+  messageContainerSelector: '[data-content="user-message"], [class*="ai-message-item"]',
+  isUserMessage: (el) => el.getAttribute("data-content") === "user-message",
 };
 
 /**

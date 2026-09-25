@@ -9,7 +9,7 @@
 
 const SITE_LABELS = {
   claude: "Claude", chatgpt: "ChatGPT", gemini: "Gemini",
-  perplexity: "Perplexity", mistral: "Mistral", copilot: "Copilot", deepseek: "DeepSeek",
+  perplexity: "Perplexity", mistral: "Mistral", copilot: "Copilot",
 };
 
 async function loadSettings() {
