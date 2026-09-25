@@ -8,7 +8,7 @@
  */
 
 const CHATGPT_INJECTOR_CONFIG = {
-  inputSelector: "#prompt-textarea",
+  inputSelector: '#prompt-textarea, #mobile-composer-prompt',
   sendButtonSelector: '[data-testid="send-button"]',
   targetSite: "chatgpt",
 };
