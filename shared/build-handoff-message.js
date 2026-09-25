@@ -12,9 +12,9 @@ function buildHandoffMessage(leadInText, transcript) {
   return [cleanLeadIn, "", "---", "", cleanTranscript, "", "---"].join("\n");
 }
 
-if (typeof window !== "undefined") {
-  window.ChatHandoff = window.ChatHandoff || {};
-  window.ChatHandoff.buildHandoffMessage = buildHandoffMessage;
+if (typeof self !== "undefined") {
+  self.ChatHandoff = self.ChatHandoff || {};
+  self.ChatHandoff.buildHandoffMessage = buildHandoffMessage;
 }
 if (typeof module !== "undefined" && module.exports) {
   module.exports = { buildHandoffMessage };

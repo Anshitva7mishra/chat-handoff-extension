@@ -20,9 +20,9 @@ function formatConversationAsMarkdown(messages, sourceSiteLabel) {
 
 // Browser context (content scripts): attach to window.
 // Node/test context: export via module.exports if present.
-if (typeof window !== "undefined") {
-  window.ChatHandoff = window.ChatHandoff || {};
-  window.ChatHandoff.formatConversationAsMarkdown = formatConversationAsMarkdown;
+if (typeof self !== "undefined") {
+  self.ChatHandoff = self.ChatHandoff || {};
+  self.ChatHandoff.formatConversationAsMarkdown = formatConversationAsMarkdown;
 }
 if (typeof module !== "undefined" && module.exports) {
   module.exports = { formatConversationAsMarkdown };
